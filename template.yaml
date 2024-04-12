@@ -1,4 +1,3 @@
-hello
 AWSTemplateFormatVersion: '2010-09-09'
 Description: This template is to create all resources for Config Service Api
 
