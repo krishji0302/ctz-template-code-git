@@ -51,35 +51,7 @@ Resources:
       Protocol: email
       TopicArn: !Ref SNSTopic
       Endpoint: "krishji0302@gmail.com"
-  
 
-  SNSSubscriptionForEmailafzal:
-    Type: AWS::SNS::Subscription
-    Properties:
-      Protocol: email
-      TopicArn: !Ref SNSTopic
-      Endpoint: "afzalmohammad8@gmail.com"
-
-  DailyFileLocationParameter:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: /fsb/dev/datalake/daily-files-loc/daily_files
-      Type: String
-      Value: 'daily_files/'
-
-  ArchivalFileLocationParameter:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: /fsb/dev/datalake/archival-files-loc
-      Type: String
-      Value: 'Archival/'
-
-  BucketNameParameter:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: /fsb/dev/datalake/bucket-name-loc
-      Type: String
-      Value: 'glue-poc-by-krishna'
 
   S3InvokeLambdaPermission:
     Type: AWS::Lambda::Permission
