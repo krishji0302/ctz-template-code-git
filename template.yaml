@@ -1,0 +1,91 @@
+hello
+AWSTemplateFormatVersion: '2010-09-09'
+Description: This template is to create all resources for Config Service Api
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: glue-poc-by-krishna
+
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: 's3:ObjectCreated:*'
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: .csv
+            Function: !GetAtt Lambda.Arn
+     
+
+  Lambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: "myfirstlambdafunction"
+      Handler: lambda_function.lambda_handler
+      Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
+      Code:
+        S3Bucket: glue-poc-by-krishna-new
+        S3Key: myfirstlambdafunction.zip
+      Runtime: "python3.8"
+      Timeout: 300
+      MemorySize: 512
+      TracingConfig:
+        Mode: Active
+      Layers:
+        - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
+
+  SNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: "sns_topic_poc"
+
+  SNSSubscriptionForEmail1:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: email
+      TopicArn: !Ref SNSTopic
+      Endpoint: "krishji0302@gmail.com"
+  
+
+  SNSSubscriptionForEmailafzal:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: email
+      TopicArn: !Ref SNSTopic
+      Endpoint: "afzalmohammad8@gmail.com"
+
+  DailyFileLocationParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /fsb/dev/datalake/daily-files-loc/daily_files
+      Type: String
+      Value: 'daily_files/'
+
+  ArchivalFileLocationParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /fsb/dev/datalake/archival-files-loc
+      Type: String
+      Value: 'Archival/'
+
+  BucketNameParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /fsb/dev/datalake/bucket-name-loc
+      Type: String
+      Value: 'glue-poc-by-krishna'
+
+  S3InvokeLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref Lambda
+      Principal: s3.amazonaws.com
+      SourceArn: !Sub arn:aws:s3:::${BucketName}
