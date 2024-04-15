@@ -1,5 +1,5 @@
-name: Deploy SAM
-template_file_path: ./template.yaml
+#name: Deploy SAM
+#template_file_path: ./template.yaml
 
 on:
   workflow_call:
