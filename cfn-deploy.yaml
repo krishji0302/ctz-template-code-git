@@ -2,7 +2,6 @@ template-file-path: template.yaml
 parameters: {}
 tags: {}
 
-
 on:
   workflow_call:
     inputs:
