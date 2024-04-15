@@ -62,7 +62,7 @@ Resources:
             Type: String
             Value: 'daily_files/'
 
-tsaw-notify-pca-expire-demo:
+Function:
     Type: AWS::Serverless::Function
     Properties:
         FunctionName: !Ref FunctionName
