@@ -1,0 +1,58 @@
+name: Deploy SAM
+template_file_path: ./template.yaml
+
+on:
+  workflow_call:
+    inputs:
+      s3_bucket:
+        required: true
+        type: string
+        default: ''
+      stack_name:
+        required: true
+        type: string
+        default: ''
+      template_file_path:
+        required: true
+        type: string
+        default: ''
+      aws_region:
+        required: false
+        type: string
+        default: ''
+      environment_name:
+        required: true
+        type: string
+        default: ''
+
+jobs:
+  sam-validate-build-test-deploy:
+    name: Template
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    envirnment: ${{ inputs:environment_name }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name : Setup SAM
+        uses: aws-actions/setup-sam@v2
+        with:
+         use-installer: true
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+         role-to-assume: ${{secrets:ROLETOASSUME}}
+         aws-region: ${{inputs.aws_region}}
+
+      - name: SAM Validate
+        run: |
+          sam validate --template-file ${{inputs.template_file_path}}
+
+      - name: SAM Deploy
+        run: |
+          sam deploy --template-file ${{inputs.template_file_path}} --stack-name ${{inputs.stack_name}} --s3-bucket ${{input.s3_bucket}} --capabilities CAPABILITIES_IAM
