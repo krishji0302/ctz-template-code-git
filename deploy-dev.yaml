@@ -1,0 +1,34 @@
+name: Deploy DevOps Lambda
+
+on:
+  workflow_dispatch:
+
+jobs:
+  env-vars:
+    runs-on: ubuntu-latest
+    environment: devops
+    outputs:
+      s3_bucket: ${{vars.S3BUCKET}}
+      stack_name: ${{vars.STACKNAME}}
+      aws_region: ${{vars.AWSREGION}}
+    steps:
+      - run: |
+          echo ${{vars.S3BUCKET}}
+          echo ${{vars.STACKNAME}}
+          echo ${{vars.AWSREGION}}
+
+  deploy-devops:
+    name: Deploy DevOps
+    needs: env-vars
+    permissions:
+      id-token: write
+      contents: read
+    uses: cfn-deploy.yaml
+    with:
+      s3_bucket: ${{ needs.env-vars.outputs.s3_bucket }}
+      stack_name: ${{ needs.env-vars.outputs.stack_name }}
+      aws_region: ${{ needs.env-vars.outputs.aws_region }}
+      template_file_path: template.yaml
+      environment_name: devops
+      aws_region: ${{needs.env-vars.outputs.aws_region }}
+    secrets: inherit
