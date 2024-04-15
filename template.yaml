@@ -45,7 +45,7 @@ Resources:
     Properties:
       DisplayName: "sns_topic_poc"
 
-  SNSSubscriptionForEmail2:
+  SNSSubscriptionForEmail5:
     Type: AWS::SNS::Subscription
     Properties:
       Protocol: email
