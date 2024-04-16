@@ -72,7 +72,7 @@ Resources:
             CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
             Handler: index.handler
             Runtime: "python3.8"
-            Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/new-role-for-git-integration-via-template-2nd-stage"
+#            Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/new-role-for-git-integration-via-template-2nd-stage"
 #AWSServiceRoleForGitSync
 #lambda-role-for-cf
 #new-role-for-git-integration-via-template-2nd-stage
