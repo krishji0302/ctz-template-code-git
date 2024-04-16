@@ -71,21 +71,20 @@ Resources:
             Timeout: 120
             CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
             Handler: index.handler
-            Runtime: "python3.8"
+            Runtime: python3.9
             Events:
                 RateSchedule:
                     Properties:
                         Description: Schedule to run daily at 7am
                         Name: !Sub ${FunctionName}-CronSchedule
                         Schedule: cron(00 11 *| * ? *)
-                        State: ENABLED
+                        Enabled: true
                     Type: Schedule
             Environment:
                 Variables:
                     SnsTopic: !Ref MySnsTopic
                     STAGE: !Ref EnvironmentName
                     LOB: !Ref LobName
-
             Policies:
                 - Version: '2012-10-17'
                   Statement:
