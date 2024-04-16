@@ -72,7 +72,7 @@ Resources:
             CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
             Handler: index.handler
             Runtime: "python3.8"
-            Role: !Sub "arn:aws:iam::${AWS::AccountID}:role/lambda-role-for-cf"
+            Role: !Sub "arn:aws:iam::891377400717:role/aws-service-role/repository.sync.codeconnections.amazonaws.com/AWSServiceRoleForGitSync"
             Events:
                 RateSchedule:
                     Properties:
