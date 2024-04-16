@@ -43,6 +43,7 @@ Globals:
         #STAGE: !Ref EnvironmentName
 
 Resources:
+
     MySnsTopic:
         Type: AWS::SNS::Topic
         Properties:
@@ -54,7 +55,7 @@ Resources:
         Properties:
             Endpoint: !Sub ${SnSendpoint}
             Protocol: email
-            TopicArn: !Ref MySnsTopic
+            TopicArn: !Ref 'MySnsTopic'
     MySsMParam:
         Type: AWS::SSM::Parameter
         Properties:
@@ -62,7 +63,7 @@ Resources:
             Type: String
             Value: 'daily_files/'
 
-Function:
+Function0:
     Type: AWS::Serverless::Function
     Properties:
         FunctionName: !Ref FunctionName

@@ -23,12 +23,12 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    uses: build-sam.yaml
+    uses: ./.github/workflows/build-sam.yaml
     with:
       s3_bucket: ${{ needs.env-vars.outputs.s3_bucket }}
       stack_name: ${{ needs.env-vars.outputs.stack_name }}
       aws_region: ${{ needs.env-vars.outputs.aws_region }}
-      template_file_path: template.yaml
+      template_file_path: lambda/template.yaml
       environment_name: devops
       aws_region: ${{needs.env-vars.outputs.aws_region }}
     secrets: inherit
