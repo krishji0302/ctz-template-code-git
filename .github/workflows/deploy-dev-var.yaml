@@ -26,17 +26,17 @@ jobs:
           echo ${{vars.STACKNAME}}
           echo ${{vars.AWSREGION}}
 
-deploy-lambda:
-  name: Deploy ${{inputs.environment_name}}
-  needs: env-vars
-  permissions:
-    id-token: write
-    contents: read
-  uses: ./.github/workflows/build-sam.yaml
-  with:
-    s3_bucket: ${{ needs.env-vars.outputs.s3_bucket }}
-    stack_name: ${{ needs.env-vars.outputs.stack_name }}
-    aws_region: ${{ needs.env-vars.outputs.aws_region }}
-    template_file_path: lambda/template.yaml
-    environment_name: ${{inputs.environment_name}}
-  secrets: inherit
+  deploy-lambda:
+    name: Deploy ${{inputs.environment_name}}
+    needs: env-vars
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/build-sam.yaml
+    with:
+      s3_bucket: ${{ needs.env-vars.outputs.s3_bucket }}
+      stack_name: ${{ needs.env-vars.outputs.stack_name }}
+      aws_region: ${{ needs.env-vars.outputs.aws_region }}
+      template_file_path: lambda/template.yaml
+      environment_name: ${{inputs.environment_name}}
+    secrets: inherit
