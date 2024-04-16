@@ -104,6 +104,6 @@ Resources:
                 - Version: '2012-10-17'
                   Statement:
                    - Effect: Allow
-                    Action:
+                     Action:
                       - ssm:GetParameter
-                    Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
+                     Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
