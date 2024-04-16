@@ -79,7 +79,7 @@ Resources:
                         Name: !Sub ${FunctionName}-CronSchedule
                         Schedule: cron(00 11 *| * ? *)
                         Enable: true
-                    Type: Schdule
+                    Type: Schedule
             Environment:
                 Variables:
                     SnsTopic: !Ref MySnsTopic
