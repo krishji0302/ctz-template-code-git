@@ -78,7 +78,6 @@ Resources:
 #new-role-for-git-integration-via-template-2nd-stage
 #new-role-git-path-integration
 #"arn:${AWS::Partition}:iam::${AWS::AccountId}:role/lambda-deploy-jb-app"
-
             Events:
                 RateSchedule:
                     Properties:
