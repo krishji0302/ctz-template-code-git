@@ -1,6 +1,6 @@
 name: Deploy SAM
 
-template-file-path: template.yaml
+template-file-path: lambda/template.yaml
 parameters: {}
 tags: {}
 
