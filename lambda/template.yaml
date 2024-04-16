@@ -72,6 +72,7 @@ Resources:
             CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
             Handler: index.handler
             Runtime: python3.9
+            Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             Events:
                 RateSchedule:
                     Properties:
