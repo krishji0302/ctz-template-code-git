@@ -78,7 +78,7 @@ Resources:
                         Description: Schedule to run daily at 7am
                         Name: !Sub ${FunctionName}-CronSchedule
                         Schedule: cron(00 11 *| * ? *)
-                        Enable: true
+                        State: ENABLED
                     Type: Schedule
             Environment:
                 Variables:
