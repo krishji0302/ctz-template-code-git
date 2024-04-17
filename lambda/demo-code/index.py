@@ -5,7 +5,7 @@ now = datetime.now()
 current_time = now.strftime("%H:%M:%S")
 
 def lambda_handler(event, context):
-    print("hello krishna, how are you")
+    print("hello krishna, how are you today")
     print("current time is ", current_time)
     
     return {
