@@ -59,7 +59,7 @@ Resources:
     MySsMParam:
         Type: AWS::SSM::Parameter
         Properties:
-            Name: /fsb/dev/datalake/daily-files-loc/daily_files
+            Name: /fsb/dev/datalake/daily-files-loc/daily_files_krish
             Type: String
             Value: 'daily_files/'
 
