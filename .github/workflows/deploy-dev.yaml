@@ -23,7 +23,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    uses: ./.github/workflows/build-sam.yaml
+    uses: build-sam.yaml
     with:
       s3_bucket: ${{ needs.env-vars.outputs.s3_bucket }}
       stack_name: ${{ needs.env-vars.outputs.stack_name }}
