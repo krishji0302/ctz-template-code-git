@@ -1,11 +1,5 @@
 name: Deploy SAM
 
-
-template-file-path: lambda/template.yaml
-parameters: {}
-tags: {}
-
-
 on:
   workflow_call:
     inputs:
