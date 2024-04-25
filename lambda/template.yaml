@@ -67,7 +67,7 @@ Resources:
         Type: AWS::Serverless::Function
         Properties:
             FunctionName: !Ref FunctionName
-            MemorySize: 10240
+            MemorySize: 1024
             Timeout: 900
             CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
             Handler: index.handler
