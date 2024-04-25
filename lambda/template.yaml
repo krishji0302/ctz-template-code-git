@@ -9,7 +9,7 @@ Parameters:
     FunctionName:
         Description: the name of your lambda function
         Type: String
-        Default: tsaw-notify-pca-expire-demo
+        Default: fsb-lam-edmasnf-s3event-ebcasc-sss
     Project:
         Description: the name of your project
         Type: String
@@ -67,11 +67,11 @@ Resources:
         Type: AWS::Serverless::Function
         Properties:
             FunctionName: !Ref FunctionName
-            MemorySize: 128
-            Timeout: 120
+            MemorySize: 10240
+            Timeout: 900
             CodeUri: code
             Handler: index.handler
-            Runtime: python3.9
+            Runtime: python3.12
             Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             Events:
                 RateSchedule:
