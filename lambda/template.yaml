@@ -59,9 +59,9 @@ Resources:
     MySsMParam:
         Type: AWS::SSM::Parameter
         Properties:
-            Name: /fsb/dev/datalake/daily-files-loc/daily_files_krish
+            Name: /fsb_edma_snow_bucketname
             Type: String
-            Value: 'daily_files/'
+            Value: 'fsb-dev-servicing-datalake'
 
     Function0:
         Type: AWS::Serverless::Function
