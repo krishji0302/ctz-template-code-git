@@ -111,7 +111,7 @@ Resources:
             FunctionName: !Ref FunctionName
             MemorySize: 1024
             Timeout: 900
-            CodeUri: ./lambda/code
+            CodeUri: ./.lambda/code/
             Handler: index.handler
             Runtime: python3.12
             Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
