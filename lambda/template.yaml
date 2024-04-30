@@ -68,7 +68,7 @@ Resources:
         Properties:
             Name: /fsb_edma_snow_dailyfiles
             Type: String
-            Value: 'daily_files/'
+            Value: 'daily_parquet_files/'
 
     MySsMParam2:
         Type: AWS::SSM::Parameter
