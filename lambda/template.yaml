@@ -153,7 +153,7 @@ Resources:
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
 
     MyS3BucketNotification:
-        Type: AWS::S3::BucketNotification
+        Type: AWS::S3::BucketNotificationConfiguration
         Properties:
             Bucket: s3://fsb-poc-datalake
             NotificationConfiguration:
