@@ -156,7 +156,7 @@ Resources:
         Type: AWS::S3::BucketNotification
         Properties:
             Bucket: s3://fsb-poc-datalake/daily_files/
-                NotificationConfiguration:
+                NotificationConfigurations:
                     LambdaConfigurations:
                         - Event: 's3:ObjectCreated:*'
                           Filter:
