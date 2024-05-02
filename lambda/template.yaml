@@ -155,7 +155,7 @@ Resources:
     MyS3BucketNotification:
         Type: AWS::S3::BucketNotificationConfiguration
         Properties:
-            Bucket: fsb-poc-datalake
+            Bucket: glue-poc-by-krishna-new
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
