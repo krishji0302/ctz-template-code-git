@@ -151,3 +151,17 @@ Resources:
                      Action:
                       - ssm:GetParameter
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
+
+    MyS3BucketNotification:
+        Type: AWS::S3::BucketNotification
+        Properties:
+            Bucket: s3://fsb-poc-datalake/daily_files/
+                NotificationConfiguration:
+                    LambdaConfigurations:
+                        - Event: 's3:ObjectCreated:*'
+                          Filter:
+                           S3Key:
+                            Rules:
+                             - Name: suffix
+                               Value: .csv
+                          Function: !GetAtt Function0.Arn
