@@ -156,6 +156,7 @@ Resources:
         Type: AWS::S3::BucketPolicy
         Properties:
             Bucket: glue-poc-by-krishna-new
+            Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             PolicyDocument:
                 Statement:
                  - Effect: Allow
