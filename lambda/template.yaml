@@ -156,14 +156,14 @@ Resources:
         Type: AWS::S3::BucketNotification
         Properties:
             Bucket: s3://fsb-poc-datalake
-                NotificationConfiguration:
-                    LambdaConfigurations:
-                        - Event: 's3:ObjectCreated:*'
-                          Filter:
-                           S3Key:
-                            Rules:
-                             - Name: prefix
-                               Value: daily_files/
-                             - Name: suffix
-                               Value: .csv
-                          Function: !GetAtt Function0.Arn
+            NotificationConfiguration:
+                LambdaConfigurations:
+                    - Event: 's3:ObjectCreated:*'
+                      Filter:
+                       S3Key:
+                        Rules:
+                         - Name: prefix
+                           Value: daily_files/
+                         - Name: suffix
+                           Value: .csv
+                      Function: !GetAtt Function0.Arn
