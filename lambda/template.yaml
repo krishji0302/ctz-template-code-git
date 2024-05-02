@@ -152,18 +152,23 @@ Resources:
                       - ssm:GetParameter
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
 
-    MyS3BucketNotification:
-        Type: AWS::S3::BucketNotificationConfiguration
+    MyS3BucketPolicy:
+        Type: AWS::S3::BucketPolicy
         Properties:
             Bucket: glue-poc-by-krishna-new
-            NotificationConfiguration:
-                LambdaConfigurations:
-                    - Event: 's3:ObjectCreated:*'
-                      Filter:
-                       S3Key:
-                        Rules:
-                         - Name: prefix
-                           Value: daily_files/
-                         - Name: suffix
-                           Value: .csv
-                      Function: !GetAtt Function0.Arn
+            PolicyDocument:
+                Statement:
+                 - Effect: Allow
+                   Principal:
+                     Service: s3.amazonaws.com
+                   Action: Lambda:InvokeFunction
+                   Resource: !GetAtt Function0.Arn
+                   Condition:
+                     StringEquals:
+                        aws:SourceArn: !Sub "arn:aws:s3:::glue-poc-by-krishna-new"
+                   EventSourceToken: daily_files/
+                   FilterRules:
+                    - Name: prefix
+                      Value: daily_files/
+                    - Name: suffix
+                      Value: .csv
