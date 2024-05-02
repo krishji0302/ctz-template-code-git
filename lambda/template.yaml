@@ -156,7 +156,7 @@ Resources:
         Type: AWS::S3::BucketNotification
         Properties:
             Bucket: s3://fsb-poc-datalake
-                NotificationConfigurations:
+                NotificationConfiguration:
                     LambdaConfigurations:
                         - Event: 's3:ObjectCreated:*'
                           Filter:
