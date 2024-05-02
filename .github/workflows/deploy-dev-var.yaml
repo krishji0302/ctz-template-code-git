@@ -1,5 +1,9 @@
 name: Deploy DevOps Lambda - vars
 
+template-file-path: lambda/template.yaml
+parameters: {}
+tags: {}
+
 on:
   workflow_dispatch:
     inputs:
