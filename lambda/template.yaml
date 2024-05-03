@@ -178,7 +178,7 @@ Resources:
                 - ''
                 - - 'arn:aws:s3:::'
                   - !Ref MyS3BucketNameVar
-                  - /daily_files_1/*
+                  - /daily_files_1/
 
     MyS3Event:
         Type: AWS::S3::Bucket
