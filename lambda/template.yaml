@@ -34,6 +34,11 @@ Parameters:
         Description: email adderess of sns notification
         Type: String
         Default: krishji0302@gmail.com
+    MyS3Bucket:
+        Description: s3 bucket name where file is coming
+        Type: String
+        Default: glue-poc-by-krishna-new
+
 
 Globals:
     Function:
@@ -155,14 +160,32 @@ Resources:
     MyS3BucketPolicy:
         Type: AWS::S3::BucketPolicy
         Properties:
-            Bucket: glue-poc-by-krishna-new
+            Bucket: !Ref MyS3Bucket
             PolicyDocument:
                 Statement:
-                 - Effect: Allow
+                 - Sid: LambdaPermission
+                   Effect: Allow
                    Principal:
-                     Service: s3.amazonaws.com
-                   Action: lambda:InvokeFunction
-                   Resource: !GetAtt Function0.Arn
+                     Service: lambda.amazonaws.com
+                   Action: 's3:GetObject'
+                   Resource: !Join
+                    - ''
+                    - - 'arn:aws:s3:::'
+                      - !Ref MyS3Bucket
+                      - /daily_files/*
+    
+    MyLambdaPermission:
+        Type: AWS::Lambda::Permission
+        Properties:
+            Action: lambda:InvokeFunction
+            FunctionName: arn:aws:lambda:region:account-id:function:function-name
+            Principal: s3.amazonaws.com
+            SourceArn: !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref MyS3Bucket
+                  - /daily_files/*
+
                    Condition:
                      StringEquals:
                         aws:SourceArn: !Sub "arn:aws:s3:::glue-poc-by-krishna-new"
@@ -172,3 +195,19 @@ Resources:
                       Value: daily_files/
                     - Name: suffix
                       Value: .csv
+
+    MyS3Event:
+        Type: AWS::S3::Bucket
+        Properties:
+            Bucket: !Ref MyS3Bucket
+            NotificationConfiguration:
+                LambdaConfigurations:
+                    - Event: 's3:ObjectCreated:*'
+                      Function: !GetAtt Function0.Arn
+                      Filter:
+                       Key:
+                        Rules:
+                         - Name: prefix
+                           Value: daily_files/
+                         - Name: suffix
+                           Value: .csv
