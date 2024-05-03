@@ -191,7 +191,7 @@ Resources:
                       Function: !GetAtt Function0.Arn
                       Filter:
                        S3Key:
-                        Rules:
+                        FilterRules:
                          - Name: prefix
                            Value: daily_files_1/
                          - Name: suffix
