@@ -183,7 +183,7 @@ Resources:
     MyS3Event:
         Type: AWS::S3::Bucket
         Properties:
-            Bucket: !Ref MyS3BucketNameVar
+            BucketName: !Ref MyS3BucketNameVar
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
