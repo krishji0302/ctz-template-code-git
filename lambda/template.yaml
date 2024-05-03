@@ -178,7 +178,7 @@ Resources:
         Type: AWS::Lambda::Permission
         Properties:
             Action: lambda:InvokeFunction
-            Function: !GetAtt Function0.Arn
+            FunctionName: !GetAtt Function0.Arn
             Principal: s3.amazonaws.com
             SourceArn: !Join
                 - ''
