@@ -37,7 +37,7 @@ Parameters:
     MyS3Bucket:
         Description: s3 bucket name where file is coming
         Type: String
-        Default: glue-poc-by-krishna-new
+        Default: glue-poc-by-krishna-new-for-demo
 
 
 Globals:
@@ -180,7 +180,7 @@ Resources:
                   - !Ref MyS3Bucket
                   - /daily_files_1/*
 
-    MyS3EventHadler:
+    MyS3EventHandler:
         Type: AWS::S3::Bucket
         Properties:
             BucketName: !Ref MyS3Bucket
