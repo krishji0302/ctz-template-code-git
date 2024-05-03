@@ -54,55 +54,49 @@ Resources:
         Properties:
             DisplayName: !Sub ${Project}-${Subject}-topic
             TopicName: !Sub ${Project}-${Subject}-topic
-    
     MySnsSubscribe:
         Type: AWS::SNS::Subscription
         Properties:
             Endpoint: !Sub ${SnSendpoint}
             Protocol: email
             TopicArn: !Ref 'MySnsTopic'
+
     MySsMParam:
         Type: AWS::SSM::Parameter
         Properties:
             Name: /fsb_edma_snow_bucketname
             Type: String
             Value: 'fsb-dev-servicing-datalake'
-
     MySsMParam1:
         Type: AWS::SSM::Parameter
         Properties:
             Name: /fsb_edma_snow_dailyfiles
             Type: String
             Value: 'daily_parquet_files/'
-
     MySsMParam2:
         Type: AWS::SSM::Parameter
         Properties:
             Name: /fsb_edma_snow_processingfiles
             Type: String
             Value: 'processing_files/'
-
     MySsMParam3:
         Type: AWS::SSM::Parameter
         Properties:
             Name: /fsb_edma_snow_pqfiles
             Type: String
             Value: 'pq_files/'
-
     MySsMParam4:
         Type: AWS::SSM::Parameter
         Properties:
             Name: /fsb_edma_snow_archivalfiles
             Type: String
             Value: 'archival/'
-
     MySsMParam5:
         Type: AWS::SSM::Parameter
         Properties:
             Name: /fsb_edma_snow_metadatafiles
             Type: String
             Value: 'metadata_files/'
-
     MySsMParam6:
         Type: AWS::SSM::Parameter
         Properties:
@@ -178,7 +172,7 @@ Resources:
         Type: AWS::Lambda::Permission
         Properties:
             Action: lambda:InvokeFunction
-            FunctionName: Function0
+            FunctionName: !Ref FunctionName
             Principal: s3.amazonaws.com
             SourceArn: !Join
                 - ''
