@@ -161,7 +161,6 @@ Resources:
         Type: AWS::S3::BucketPolicy
         Properties:
             Bucket: !Ref MyS3Bucket
-            Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             PolicyDocument:
                 Statement:
                  - Sid: LambdaPermission
@@ -191,7 +190,6 @@ Resources:
         Type: AWS::S3::Bucket
         Properties:
             Bucket: !Ref MyS3Bucket
-            Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
