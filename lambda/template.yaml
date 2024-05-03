@@ -180,7 +180,7 @@ Resources:
                   - !Ref MyS3Bucket
                   - /daily_files_1/*
 
-    MyS3Event:
+    MyS3EventHadler:
         Type: AWS::S3::Bucket
         Properties:
             BucketName: !Ref MyS3Bucket
