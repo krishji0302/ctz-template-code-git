@@ -180,8 +180,8 @@ Resources:
                   - !Ref MyS3BucketNameVar
                   - /daily_files_1/*
 
-    MyS3EventConfiguration:
-        Type: AWS::S3::BucketNotification
+    MyS3Event:
+        Type: AWS::S3::Bucket
         Properties:
             Bucket: !Ref MyS3BucketNameVar
             NotificationConfiguration:
