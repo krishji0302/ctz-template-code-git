@@ -182,7 +182,7 @@ Resources:
                   - /daily_files_1/*
 
     MyS3EventHandler:
-        Type: AWS::S3::Bucket
+        Type: AWS::S3::BucketNotification
         Properties:
             Bucket: !Ref MyS3BucketNameVar
             NotificationConfiguration:
