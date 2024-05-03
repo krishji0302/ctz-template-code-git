@@ -174,11 +174,7 @@ Resources:
             Action: lambda:InvokeFunction
             FunctionName: !Ref FunctionName
             Principal: s3.amazonaws.com
-            SourceArn: !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !Ref MyS3BucketNameVar
-                  - /daily_files_1/*
+            SourceArn: !Sub arn:aws:s3:::${BucketName}
 
     MyS3EventHandler:
         Type: AWS::S3::Bucket
