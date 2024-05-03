@@ -189,7 +189,7 @@ Resources:
                     - Event: 's3:ObjectCreated:*'
                       Function: !GetAtt Function0.Arn
                       Filter:
-                       S3Key:
+                       Key:
                         FilterRules:
                          - Name: prefix
                            Value: daily_files_1/
