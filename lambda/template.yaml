@@ -186,16 +186,6 @@ Resources:
                   - !Ref MyS3Bucket
                   - /daily_files/*
 
-                   Condition:
-                     StringEquals:
-                        aws:SourceArn: !Sub "arn:aws:s3:::glue-poc-by-krishna-new"
-                   EventSourceToken: daily_files/
-                   FilterRules:
-                    - Name: prefix
-                      Value: daily_files/
-                    - Name: suffix
-                      Value: .csv
-
     MyS3Event:
         Type: AWS::S3::Bucket
         Properties:
