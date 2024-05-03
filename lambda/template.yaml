@@ -34,7 +34,7 @@ Parameters:
         Description: email adderess of sns notification
         Type: String
         Default: krishji0302@gmail.com
-    MyS3Bucket:
+    MyS3BucketNameVar:
         Description: s3 bucket name where file is coming
         Type: String
         Default: glue-poc-by-krishna-new-for-demo
@@ -154,7 +154,7 @@ Resources:
     MyS3BucketPolicy:
         Type: AWS::S3::BucketPolicy
         Properties:
-            Bucket: !Ref MyS3Bucket
+            Bucket: !Ref MyS3BucketNameVar
             PolicyDocument:
                 Statement:
                  - Sid: LambdaPermission
@@ -165,7 +165,7 @@ Resources:
                    Resource: !Join
                     - ''
                     - - 'arn:aws:s3:::'
-                      - !Ref MyS3Bucket
+                      - !Ref MyS3BucketNameVar
                       - /daily_files_1/*
     
     MyLambdaPermission:
@@ -177,13 +177,13 @@ Resources:
             SourceArn: !Join
                 - ''
                 - - 'arn:aws:s3:::'
-                  - !Ref MyS3Bucket
+                  - !Ref MyS3BucketNameVar
                   - /daily_files_1/*
 
     MyS3EventHandler:
         Type: AWS::S3::Bucket
         Properties:
-            BucketName: !Ref MyS3Bucket
+            BucketName: !Ref MyS3BucketNameVar
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
