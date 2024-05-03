@@ -180,7 +180,6 @@ Resources:
         Properties:
             Action: lambda:InvokeFunction
             Function: !GetAtt Function0.Arn
-            Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             Principal: s3.amazonaws.com
             SourceArn: !Join
                 - ''
