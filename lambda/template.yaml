@@ -9,36 +9,23 @@ Parameters:
     FunctionName:
         Description: the name of your lambda function
         Type: String
-        Default: fsb-lam-edmasnf-s3event-ebcasc-sss
+        Default: datalake-snoeflake-edma-s3
     Project:
         Description: the name of your project
         Type: String
         Default: cloudeng
-    LobName:
-        Description: line of business, example - servicing, banking, mortgage, network. Update accordengly for SAM deployment
-        Type: String
-        Default: 'sharedservice'
     Subject:
         Description: tsubject name of your SNS topic
         Type: String
         Default: tsaw-notify-pca-expire-demo
-    PcaExpire:
-        Description: PCA expire date SSM parameter
-        Type: String
-        Default: config/cloudeng/pca-expiredate-demo
-    CronSchedule:
-        Description: the name of your cloudwatch EventBridge
-        Type: String
-        Default: tsaw-cloudeng-notify-pca-expire-CronsSchedule-demo
     SnSendpoint:
         Description: email adderess of sns notification
         Type: String
         Default: krishji0302@gmail.com
-    MyS3SnowflakeBucket:
+    S3SnowflakeBucket:
         Description: s3 bucket name where file is coming
         Type: String
         Default: glue-poc-by-krishna-new-for-demo
-
 
 Globals:
     Function:
@@ -87,6 +74,7 @@ Resources:
                     Type: Schedule
 
             Policies:
+                - AWSLambdaExecute
                 - Version: '2012-10-17'
                   Statement:
                     - Effect: Allow
@@ -106,6 +94,8 @@ Resources:
                    - Effect: Allow
                      Action:
                       - ssm:GetParameter
+                      - ssm:DescribeParameters
+                      - ssm:ListParameters
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
 
     MyS3BucketPolicy:
@@ -143,10 +133,10 @@ Resources:
 
     DatalakeSnowFlakeInvokePermission:
         Type: AWS::Lambda::Permission
-        DependsOn: [DatalakeSnoeFlakeFunction]
+        DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
             Action: lambda:InvokeFunction
-            FunctionName: !Ref FunctionName.Arn
+            FunctionName: !Ref DatalakeSnowFlakeFunction.Arn
             Principal: s3.amazonaws.com
             SourceAccount: !Sub ${AWS::AccountId}
             SourceArn: !Join
