@@ -64,14 +64,6 @@ Resources:
             Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             Layers:
                 - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
-            Events:
-                RateSchedule:
-                    Properties:
-                        Description: Schedule to run daily at 7am
-                        Name: !Sub ${FunctionName}-CronSchedule
-                        Schedule: cron(00 11 *| * ? *)
-                        Enabled: true
-                    Type: Schedule
 
             Policies:
                 - AWSLambdaExecute
