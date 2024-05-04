@@ -111,15 +111,15 @@ Resources:
         Type: AWS::Lambda::Permission
         DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
-            Event: 's3:ObjectCreated:*'
+#            Event: 's3:ObjectCreated:*'
             Function: !GetAtt DatalakeSnowFlakeFunction.Arn
-            Filter:
-              S3Key:
-                Rules:
-                 - Name: prefix
-                   Value: daily_files/
-                 - Name: suffix
-                   Value: .csv
+#            Filter:
+#              S3Key:
+#                Rules:
+#                 - Name: prefix
+#                   Value: daily_files/
+#                 - Name: suffix
+#                   Value: .csv
             Action: lambda:InvokeFunction
             FunctionName: !Ref DatalakeSnowFlakeFunction
             Principal: s3.amazonaws.com
