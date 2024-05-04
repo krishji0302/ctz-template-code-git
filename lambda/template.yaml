@@ -109,7 +109,7 @@ Resources:
 
     DatalakeSnowFlakeInvokePermission:
         Type: AWS::Lambda::Permission
-#        DependsOn: [DatalakeSnowFlakeFunction]
+        DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
             Action: lambda:InvokeFunction
             FunctionName: !Ref DatalakeSnowFlakeFunction
