@@ -68,7 +68,7 @@ Resources:
                 Type: S3
                 Bucket: !Ref S3SnowflakeBucketbhgft
                 Properties:
-                    Events: s3:ObjectCreated:*
+                    Events: 's3:ObjectCreated:*'
                     Filter:
                         S3Key:
                             Rules:
