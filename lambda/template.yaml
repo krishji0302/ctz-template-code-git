@@ -111,9 +111,6 @@ Resources:
         Type: AWS::Lambda::Permission
         DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
-            BucketName: !Ref S3SnowflakeBucketbhgft
-            VersioningConfiguration:
-                Status: Enabled
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
