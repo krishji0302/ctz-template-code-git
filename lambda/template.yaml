@@ -53,7 +53,7 @@ Resources:
             Value: 'fsb-dev-servicing-datalake'
 
     DatalakeSnowFlakeFunction:
-        Type: AWS::Serverless::Function
+        Type: AWS::Lambda::Function
         Properties:
             FunctionName: !Ref FunctionName
             MemorySize: 1027
