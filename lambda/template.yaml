@@ -188,3 +188,10 @@ Resources:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
                       Function: !GetAtt Function0.Arn
+                      Filter:
+                       Key:
+                        Rules:
+                         - Name: prefix
+                           Value: daily_files/
+                         - Name: suffix
+                           Value: .csv
