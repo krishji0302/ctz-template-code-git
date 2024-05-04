@@ -9,7 +9,7 @@ Parameters:
     FunctionName:
         Description: the name of your lambda function
         Type: String
-        Default: datalake-snoeflake-edma-s3
+        Default: datalake-snowflake-edma-s3
     Project:
         Description: the name of your project
         Type: String
