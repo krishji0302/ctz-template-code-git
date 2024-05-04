@@ -107,20 +107,6 @@ Resources:
                       - !Ref S3SnowflakeBucket
                       - /daily_files_1/*
 
-    DatalakeSnowFlakeInvokePermission:
-        Type: AWS::Lambda::Permission
-        DependsOn: [DatalakeSnowFlakeFunction]
-        Properties:
-            Action: lambda:InvokeFunction
-            FunctionName: !Ref DatalakeSnowFlakeFunction
-            Principal: s3.amazonaws.com
-            SourceAccount: !Sub ${AWS::AccountId}
-            SourceArn: !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !Ref S3SnowflakeBucket
-                  - /daily_files_1/
-
     MyS3Event:
         Type: AWS::S3::Bucket
         Properties:
