@@ -120,11 +120,11 @@ Resources:
                    Value: daily_files/
                  - Name: suffix
                    Value: .csv
-            Action: lambda:InvokeFunction
-            FunctionName: !Ref DatalakeSnowFlakeFunction
-            Principal: s3.amazonaws.com
-            SourceAccount: !Sub ${AWS::AccountId}
-            SourceArn: !Join
+              Action: lambda:InvokeFunction
+              FunctionName: !Ref DatalakeSnowFlakeFunction
+              Principal: s3.amazonaws.com
+              SourceAccount: !Sub ${AWS::AccountId}
+              SourceArn: !Join
                 - ''
                 - - 'arn:aws:s3:::'
                   - !Ref S3SnowflakeBucketbhgft
