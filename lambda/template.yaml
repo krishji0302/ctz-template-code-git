@@ -52,6 +52,44 @@ Resources:
             Type: String
             Value: 'fsb-dev-servicing-datalake'
 
+    DatalakeSnowFlakeFunction:
+        Type: AWS::Lambda::Function
+        Properties:
+            FunctionName: !Ref FunctionName
+            MemorySize: 1027
+            Timeout: 900
+            CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
+            Handler: index.handler
+            Runtime: python3.12
+            Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
+            Layers:
+                - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
+
+            Policies:
+                - AWSLambdaExecute
+                - Version: '2012-10-17'
+                  Statement:
+                    - Effect: Allow
+                      Action:
+                        - sns:Publish
+                        - sns:Subscribe
+                      Resource: !Sub 'arn:aws:sns:us-east-1:${AWS:AccountId}:${Project}-${Subject}-topic'
+                - Version: '2012-10-17'
+                  Statement:
+                    - Effect: Allow
+                      Action:
+                        - 'cloudwatch:*'
+                        - 'logs:*'
+                      Resources: !Sub 'arn:aws:logs:${AWS:Region}:${AWS:AccountId}:log-group:/aws/lambda/${FuctionName}:*'
+                - Version: '2012-10-17'
+                  Statement:
+                   - Effect: Allow
+                     Action:
+                      - ssm:GetParameter
+                      - ssm:DescribeParameters
+                      - ssm:ListParameters
+                     Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
+
     MyS3BucketPolicy:
         Type: AWS::S3::BucketPolicy
         Properties:
@@ -82,55 +120,3 @@ Resources:
               - - 'arn:aws:s3:::'
                 - !Ref S3SnowflakeBucketbhgft
                 - /daily_files_1/
-
-    DatalakeSnowFlakeFunction:
-        Type: AWS::Lambda::Function
-        Properties:
-            FunctionName: !Ref FunctionName
-            MemorySize: 1027
-            Timeout: 900
-            CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
-            Handler: index.handler
-            Runtime: python3.12
-            Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
-            Layers:
-                - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
-            Events:
-                MyS3Events:
-                    Type: S3
-                    Properties:
-                        Bucket: !Ref S3SnowflakeBucketbhgft
-                        Events: 's3:ObjectCreated:*'
-                        Function: !GetAtt DatalakeSnowFlakeFunction.Arn
-                        Filter:
-                          S3Key:
-                            Rules:
-                              - Name: prefix
-                                Value: daily_files/
-                              - Name: suffix
-                                Value: .csv
-
-            Policies:
-                - AWSLambdaExecute
-                - Version: '2012-10-17'
-                  Statement:
-                    - Effect: Allow
-                      Action:
-                        - sns:Publish
-                        - sns:Subscribe
-                      Resource: !Sub 'arn:aws:sns:us-east-1:${AWS:AccountId}:${Project}-${Subject}-topic'
-                - Version: '2012-10-17'
-                  Statement:
-                    - Effect: Allow
-                      Action:
-                        - 'cloudwatch:*'
-                        - 'logs:*'
-                      Resources: !Sub 'arn:aws:logs:${AWS:Region}:${AWS:AccountId}:log-group:/aws/lambda/${FuctionName}:*'
-                - Version: '2012-10-17'
-                  Statement:
-                   - Effect: Allow
-                     Action:
-                      - ssm:GetParameter
-                      - ssm:DescribeParameters
-                      - ssm:ListParameters
-                     Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
