@@ -90,8 +90,11 @@ Resources:
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
 
     MyS3EventConfiguration:
-        Type: AWS::Lambda::Permission
+        Type: AWS::S3::Bucket
         Properties:
+            BucketName: !Ref S3SnowflakeBucketbhgft
+            VersioningConfiguration:
+                Status: Enabled
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
