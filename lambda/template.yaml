@@ -25,7 +25,7 @@ Parameters:
     S3SnowflakeBucketbhgft:
         Description: s3 bucket name where file is coming
         Type: String
-        Default: glue-poc-by-krishna-new-for-demo
+        Default: lambda-poc-for-demo-tsaw-todd
 
 Globals:
     Function:
@@ -56,7 +56,7 @@ Resources:
         Type: AWS::Serverless::Function
         Properties:
             FunctionName: !Ref FunctionName
-            MemorySize: 1024
+            MemorySize: 1023
             Timeout: 900
             CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
             Handler: index.handler
