@@ -112,7 +112,7 @@ Resources:
         DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
             Action: lambda:InvokeFunction
-            FunctionName: !GetAtt DatalakeSnowFlakeFunction
+            FunctionName: !GetAtt DatalakeSnowFlakeFunction.Arn
             Principal: s3.amazonaws.com
             SourceAccount: !Sub ${AWS::AccountId}
             SourceArn: !Join
