@@ -65,8 +65,8 @@ Resources:
             Layers:
                 - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
             Events: 's3:ObjectCreated:*'
-                Type: S3
-                Bucket: !Ref S3SnowflakeBucketbhgft
+                Type: AWS::S3::Bucket
+                BucketName: !Ref S3SnowflakeBucketbhgft
                 Properties:
     #                Events: 's3:ObjectCreated:*'
                     Filter:
