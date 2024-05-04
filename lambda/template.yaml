@@ -127,7 +127,6 @@ Resources:
             BucketName: !Ref S3SnowflakeBucket
             VersioningConfiguration:
                 Status: Enabled
-            existing: true
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
