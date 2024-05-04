@@ -122,7 +122,7 @@ Resources:
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
-                      Function: !GetAtt Function0.Arn
+                      Function: !GetAtt DatalakeSnowFlakeFunction.Arn
                       Filter:
                        S3Key:
                         Rules:
@@ -136,7 +136,7 @@ Resources:
         DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
             Action: lambda:InvokeFunction
-            FunctionName: !Ref DatalakeSnowFlakeFunction.Arn
+            FunctionName: !Ref DatalakeSnowFlakeFunction
             Principal: s3.amazonaws.com
             SourceAccount: !Sub ${AWS::AccountId}
             SourceArn: !Join
