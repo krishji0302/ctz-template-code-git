@@ -112,7 +112,7 @@ Resources:
         DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
 #            Event: 's3:ObjectCreated:*'
-            Function: !GetAtt DatalakeSnowFlakeFunction.Arn
+#            Function: !GetAtt DatalakeSnowFlakeFunction.Arn
 #            Filter:
 #              S3Key:
 #                Rules:
