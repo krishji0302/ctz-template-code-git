@@ -53,10 +53,10 @@ Resources:
             Value: 'fsb-dev-servicing-datalake'
 
     DatalakeSnowFlakeFunction:
-        Type: AWS::Lambda::Function
+        Type: AWS::Serverless::Function
         Properties:
             FunctionName: !Ref FunctionName
-            MemorySize: 1027
+            MemorySize: 1024
             Timeout: 900
             CodeUri: 's3://glue-poc-by-krishna-new/index.zip'
             Handler: index.handler
@@ -112,7 +112,7 @@ Resources:
         DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
             Action: lambda:InvokeFunction
-            FunctionName: !Ref DatalakeSnowFlakeFunction
+            FunctionName: !GetAtt DatalakeSnowFlakeFunction
             Principal: s3.amazonaws.com
             SourceAccount: !Sub ${AWS::AccountId}
             SourceArn: !Join
