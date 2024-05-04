@@ -67,42 +67,6 @@ Resources:
             Name: /fsb_edma_snow_bucketname
             Type: String
             Value: 'fsb-dev-servicing-datalake'
-    MySsMParam1:
-        Type: AWS::SSM::Parameter
-        Properties:
-            Name: /fsb_edma_snow_dailyfiles
-            Type: String
-            Value: 'daily_parquet_files/'
-    MySsMParam2:
-        Type: AWS::SSM::Parameter
-        Properties:
-            Name: /fsb_edma_snow_processingfiles
-            Type: String
-            Value: 'processing_files/'
-    MySsMParam3:
-        Type: AWS::SSM::Parameter
-        Properties:
-            Name: /fsb_edma_snow_pqfiles
-            Type: String
-            Value: 'pq_files/'
-    MySsMParam4:
-        Type: AWS::SSM::Parameter
-        Properties:
-            Name: /fsb_edma_snow_archivalfiles
-            Type: String
-            Value: 'archival/'
-    MySsMParam5:
-        Type: AWS::SSM::Parameter
-        Properties:
-            Name: /fsb_edma_snow_metadatafiles
-            Type: String
-            Value: 'metadata_files/'
-    MySsMParam6:
-        Type: AWS::SSM::Parameter
-        Properties:
-            Name: /fsb_edma_snow_snow_sns_arn-loc
-            Type: String
-            Value: 'fsb-dev-servicing-datalake'
 
     Function0:
         Type: AWS::Serverless::Function
