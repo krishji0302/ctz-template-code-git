@@ -64,18 +64,6 @@ Resources:
             Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             Layers:
                 - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
-            Events: 's3:ObjectCreated:*'
-                Type: AWS::S3::Bucket
-                    BucketName: !Ref S3SnowflakeBucketbhgft
-                    Properties:
-    #                Events: 's3:ObjectCreated:*'
-                        Filter:
-                            S3Key:
-                                Rules:
-                                  - Name: prefix
-                                    Value: daily_files_1/
-                                  - Name: suffix
-                                    Value: .csv
 
             Policies:
                 - AWSLambdaExecute
@@ -101,6 +89,24 @@ Resources:
                       - ssm:DescribeParameters
                       - ssm:ListParameters
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
+
+    MyS3EventConfiguration:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: !Ref S3SnowflakeBucketbhgft
+            VersioningConfiguration:
+                Status: Enabled
+            NotificationConfiguration:
+                LambdaConfigurations:
+                    - Event: 's3:ObjectCreated:*'
+                      Function: !GetAtt DatalakeSnowFlakeFunction.Arn
+                      Filter:
+                       S3Key:
+                        Rules:
+                         - Name: prefix
+                           Value: daily_files/
+                         - Name: suffix
+                           Value: .csv
 
     DatalakeSnowFlakeInvokePermission:
         Type: AWS::Lambda::Permission
