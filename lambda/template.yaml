@@ -130,7 +130,7 @@ Resources:
                     - Event: 's3:ObjectCreated:*'
                       Function: !GetAtt DatalakeSnowFlakeFunction.Arn
                       Filter:
-#                       S3Key:
+                       S3Key:
                         Rules:
                          - Name: prefix
                            Value: daily_files/
