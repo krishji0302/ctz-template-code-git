@@ -127,14 +127,14 @@ Resources:
             BucketName: !Ref S3SnowflakeBucket
             VersioningConfiguration:
                 Status: Enabled
+            existing: true
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
-                      existing: true
                       Function: !GetAtt DatalakeSnowFlakeFunction.Arn
                       Filter:
                        S3Key:
-                        FilterRules:
+                        Rules:
                          - Name: prefix
                            Value: daily_files/
                          - Name: suffix
