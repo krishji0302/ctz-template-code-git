@@ -90,7 +90,7 @@ Resources:
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
 
     MyS3EventConfiguration:
-        Type: AWS::S3::Bucket
+        Type: AWS::Lambda::Permission
         Properties:
             BucketName: !Ref S3SnowflakeBucketbhgft
             VersioningConfiguration:
