@@ -120,3 +120,19 @@ Resources:
                 - - 'arn:aws:s3:::'
                   - !Ref S3SnowflakeBucket
                   - /daily_files_1/
+
+    MyS3Event:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: !Ref S3SnowflakeBucket
+            NotificationConfiguration:
+                LambdaConfigurations:
+                    - Event: 's3:ObjectCreated:*'
+                      Function: !GetAtt DatalakeSnowFlakeFunction.Arn
+                      Filter:
+                       S3Key:
+                        Rules:
+                         - Name: prefix
+                           Value: daily_files/
+                         - Name: suffix
+                           Value: .csv
