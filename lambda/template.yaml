@@ -109,20 +109,7 @@ Resources:
 
     DatalakeSnowFlakeInvokePermission:
         Type: AWS::Lambda::Permission
-#        DependsOn: [DatalakeSnowFlakeFunction]
-        Properties:
-            Action: lambda:InvokeFunction
-            FunctionName: !Ref DatalakeSnowFlakeFunction
-            Principal: s3.amazonaws.com
-            SourceAccount: !Sub ${AWS::AccountId}
-            SourceArn: !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !Ref S3SnowflakeBucketbhgft
-                  - /daily_files_1/
-
-    MyS3EventConfiguration:
-        Type: AWS::S3::Bucket
+        DependsOn: [DatalakeSnowFlakeFunction]
         Properties:
             BucketName: !Ref S3SnowflakeBucketbhgft
             VersioningConfiguration:
@@ -138,3 +125,12 @@ Resources:
                            Value: daily_files/
                          - Name: suffix
                            Value: .csv
+            Action: lambda:InvokeFunction
+            FunctionName: !Ref DatalakeSnowFlakeFunction
+            Principal: s3.amazonaws.com
+            SourceAccount: !Sub ${AWS::AccountId}
+            SourceArn: !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref S3SnowflakeBucketbhgft
+                  - /daily_files_1/
