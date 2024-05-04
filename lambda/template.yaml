@@ -64,15 +64,15 @@ Resources:
             Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             Layers:
                 - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
-            Event: 's3:ObjectCreated:*'
-            Function: !GetAtt DatalakeSnowFlakeFunction.Arn
-            Filter:
-              S3Key:
-                Rules:
-                  - Name: prefix
-                    Value: daily_files/
-                  - Name: suffix
-                    Value: .csv
+            - Event: 's3:ObjectCreated:*'
+              Function: !GetAtt DatalakeSnowFlakeFunction.Arn
+              Filter:
+                S3Key:
+                  Rules:
+                   - Name: prefix
+                     Value: daily_files/
+                   - Name: suffix
+                     Value: .csv
 
 
             Policies:
