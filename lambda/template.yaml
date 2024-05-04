@@ -64,6 +64,19 @@ Resources:
             Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             Layers:
                 - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
+            Events:
+                MyS3Event:
+                    Type: S3
+                    Properties:
+                        Bucket: !Ref S3SnowflakeBucketbhgft
+                        Events: s3:ObjectCreated:*
+                        Filter:
+                            S3Key:
+                                Rules:
+                                  - Name: prefix
+                                    Value: daily_files_1/
+                                  - Name: suffix
+                                    Value: .csv
 
             Policies:
                 - AWSLambdaExecute
