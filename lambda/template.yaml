@@ -130,7 +130,7 @@ Resources:
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
-                        existing: true
+                    existing: true
                       Function: !GetAtt DatalakeSnowFlakeFunction.Arn
                       Filter:
                        S3Key:
