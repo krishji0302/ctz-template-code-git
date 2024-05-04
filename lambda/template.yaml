@@ -134,7 +134,7 @@ Resources:
                       Function: !GetAtt DatalakeSnowFlakeFunction.Arn
                       Filter:
                        S3Key:
-                        Rules:
+                        FilterRules:
                          - Name: prefix
                            Value: daily_files/
                          - Name: suffix
