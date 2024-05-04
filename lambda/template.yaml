@@ -22,7 +22,7 @@ Parameters:
         Description: email adderess of sns notification
         Type: String
         Default: krishji0302@gmail.com
-    S3SnowflakeBucket:
+    S3SnowflakeBucketbhgft:
         Description: s3 bucket name where file is coming
         Type: String
         Default: glue-poc-by-krishna-new-for-demo
@@ -93,7 +93,7 @@ Resources:
     MyS3BucketPolicy:
         Type: AWS::S3::BucketPolicy
         Properties:
-            Bucket: !Ref S3SnowflakeBucket
+            Bucket: !Ref S3SnowflakeBucketbhgft
             PolicyDocument:
                 Statement:
                  - Sid: LambdaPermission
@@ -104,7 +104,7 @@ Resources:
                    Resource: !Join
                     - ''
                     - - 'arn:aws:s3:::'
-                      - !Ref S3SnowflakeBucket
+                      - !Ref S3SnowflakeBucketbhgft
                       - /daily_files_1/*
 
     DatalakeSnowFlakeInvokePermission:
@@ -118,13 +118,13 @@ Resources:
             SourceArn: !Join
                 - ''
                 - - 'arn:aws:s3:::'
-                  - !Ref S3SnowflakeBucket
+                  - !Ref S3SnowflakeBucketbhgft
                   - /daily_files_1/
 
     MyS3EventConfiguration:
         Type: AWS::S3::Bucket
         Properties:
-            BucketName: !Ref S3SnowflakeBucket
+            BucketName: !Ref S3SnowflakeBucketbhgft
             VersioningConfiguration:
                 Status: Enabled
             NotificationConfiguration:
