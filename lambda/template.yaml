@@ -92,9 +92,6 @@ Resources:
     MyS3EventConfiguration:
         Type: AWS::Lambda::Permission
         Properties:
-            BucketName: !Ref S3SnowflakeBucketbhgft
-            VersioningConfiguration:
-                Status: Enabled
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
