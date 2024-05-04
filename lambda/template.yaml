@@ -34,7 +34,7 @@ Parameters:
         Description: email adderess of sns notification
         Type: String
         Default: krishji0302@gmail.com
-    MyS3BucketNameVar:
+    MyS3SnowflakeBucket:
         Description: s3 bucket name where file is coming
         Type: String
         Default: glue-poc-by-krishna-new-for-demo
@@ -43,9 +43,6 @@ Parameters:
 Globals:
     Function:
         Timeout: 30
-        #Environment:
-        #Variables:
-        #STAGE: !Ref EnvironmentName
 
 Resources:
 
@@ -68,7 +65,7 @@ Resources:
             Type: String
             Value: 'fsb-dev-servicing-datalake'
 
-    Function0:
+    DatalakeSnowFlakeFunction:
         Type: AWS::Serverless::Function
         Properties:
             FunctionName: !Ref FunctionName
@@ -88,11 +85,7 @@ Resources:
                         Schedule: cron(00 11 *| * ? *)
                         Enabled: true
                     Type: Schedule
-            Environment:
-                Variables:
-                    SnsTopic: !Ref MySnsTopic
-                    STAGE: !Ref EnvironmentName
-                    LOB: !Ref LobName
+
             Policies:
                 - Version: '2012-10-17'
                   Statement:
@@ -131,18 +124,6 @@ Resources:
                     - - 'arn:aws:s3:::'
                       - !Ref MyS3BucketNameVar
                       - /daily_files_1/*
-    
-    MyLambdaPermission:
-        Type: AWS::Lambda::Permission
-        Properties:
-            Action: lambda:InvokeFunction
-            FunctionName: !Ref FunctionName
-            Principal: s3.amazonaws.com
-            SourceArn: !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !Ref MyS3BucketNameVar
-                  - /daily_files_1/
 
     MyS3Event:
         Type: AWS::S3::Bucket
@@ -159,3 +140,17 @@ Resources:
                            Value: daily_files/
                          - Name: suffix
                            Value: .csv
+
+    DatalakeSnowFlakeInvokePermission:
+        Type: AWS::Lambda::Permission
+        DependsOn: [DatalakeSnoeFlakeFunction]
+        Properties:
+            Action: lambda:InvokeFunction
+            FunctionName: !Ref FunctionName.Arn
+            Principal: s3.amazonaws.com
+            SourceAccount: !Sub ${AWS::AccountId}
+            SourceArn: !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref MyS3BucketNameVar
+                  - /daily_files_1/
