@@ -111,7 +111,7 @@ Resources:
     MyS3BucketPolicy:
         Type: AWS::S3::BucketPolicy
         Properties:
-            Bucket: !Ref MyS3BucketNameVar
+            Bucket: !Ref MyS3SnowflakeBucket
             PolicyDocument:
                 Statement:
                  - Sid: LambdaPermission
@@ -122,13 +122,13 @@ Resources:
                    Resource: !Join
                     - ''
                     - - 'arn:aws:s3:::'
-                      - !Ref MyS3BucketNameVar
+                      - !Ref MyS3SnowflakeBucket
                       - /daily_files_1/*
 
     MyS3Event:
         Type: AWS::S3::Bucket
         Properties:
-            BucketName: !Ref MyS3BucketNameVar
+            BucketName: !Ref MyS3SnowflakeBucket
             NotificationConfiguration:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
@@ -152,5 +152,5 @@ Resources:
             SourceArn: !Join
                 - ''
                 - - 'arn:aws:s3:::'
-                  - !Ref MyS3BucketNameVar
+                  - !Ref MyS3SnowflakeBucket
                   - /daily_files_1/
