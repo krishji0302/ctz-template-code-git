@@ -100,5 +100,5 @@ Resources:
             SourceArn: !Join
                 - ''
                 - - 'arn:aws:s3:::'
-                  - !Ref S3SnowflakeBucket
+                  - !Ref S3SnowflakeBucketbhgft
                   - /daily_files/
