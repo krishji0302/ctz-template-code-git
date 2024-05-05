@@ -91,7 +91,6 @@ Resources:
 
     BucketNotification:
         Type: AWS:S3:BucketNotification
-        Name: bucket_notification
         Properties:
             Bucket: !Ref S3SnowflakeBucketbhgft
             LambdaFunctions: !GetAtt DatalakeSnowFlakeFunction.Arn
