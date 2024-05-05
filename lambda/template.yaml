@@ -95,7 +95,7 @@ Resources:
         Properties:
             Bucket: !Ref S3SnowflakeBucketbhgft
             LambdaFunctions: !GetAtt DatalakeSnowFlakeFunction.Arn
-                - Event: 's3:ObjectCreated:*'
+                - Events: 's3:ObjectCreated:*'
                   FilterPrefix: daily_files/
                   FilterSuffix: .csv
         Options:
