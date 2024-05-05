@@ -88,3 +88,17 @@ Resources:
                       - ssm:DescribeParameters
                       - ssm:ListParameters
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
+
+    DatalakeSnowFlakeInvokePermission:
+        Type: AWS::Lambda::Permission
+        DependsOn: [DatalakeSnowFlakeFunction]
+        Properties:
+            Action: lambda:InvokeFunction
+            FunctionName: !Ref DatalakeSnowFlakeFunction
+            Principal: s3.amazonaws.com
+            SourceAccount: !Sub ${AWS::AccountId}
+            SourceArn: !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref S3SnowflakeBucket
+                  - /daily_files/
