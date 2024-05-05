@@ -106,8 +106,17 @@ Resources:
     BucketNotification:
         Type: AWS:S3:BucketNotification
         Properties:
-            Bucket: !Ref S3SnowflakeBucketbhgft
-            LambdaFunctions: !GetAtt DatalakeSnowFlakeFunction.Arn
-            Events: 's3:ObjectCreated:*'
-            FilterPrefix: daily_files/
-            FilterSuffix: .csv
+            BucketName: !Ref S3SnowflakeBucketbhgft
+            VersioningConfiguration:
+                Status: Enabled
+            NotificationConfiguration:
+                LambdaConfigurations:
+                    - Event: 's3:ObjectCreated:Put'
+                      Function: !GetAtt DatalakeSnowFlakeFunction.Arn
+                      Filter:
+                       S3Key:
+                        Rules:
+                         - Name: prefix
+                           Value: daily_files/
+                         - Name: suffix
+                           Value: .csv
