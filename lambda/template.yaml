@@ -102,3 +102,12 @@ Resources:
                 - - 'arn:aws:s3:::'
                   - !Ref S3SnowflakeBucketbhgft
                   - /daily_files/
+
+    BucketNotification:
+        Type: AWS:S3:BucketNotification
+        Properties:
+            Bucket: !Ref S3SnowflakeBucketbhgft
+            LambdaFunctions: !GetAtt DatalakeSnowFlakeFunction.Arn
+            Events: 's3:ObjectCreated:*'
+            FilterPrefix: daily_files/
+            FilterSuffix: .csv
