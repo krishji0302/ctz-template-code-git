@@ -88,12 +88,3 @@ Resources:
                       - ssm:DescribeParameters
                       - ssm:ListParameters
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
-
-    BucketNotification:
-        Type: AWS:S3:BucketNotification
-        Properties:
-            Bucket: !Ref S3SnowflakeBucketbhgft
-            LambdaFunctions: !GetAtt DatalakeSnowFlakeFunction.Arn
-            Events: 's3:ObjectCreated:*'
-            FilterPrefix: daily_files/
-            FilterSuffix: .csv
