@@ -52,15 +52,16 @@ Resources:
             Type: String
             Value: 'fsb-dev-servicing-datalake'
 
-    MyBucket:
+    MyS3Bucket:
         Type: AWS::S3::Bucket
         Properties:
-            BucketName: lambda-poc-for-demo-tsaw-todd
-    
-    MyFolder:
-        Type: AWS::S3::Bucket
-        Properties:
-            BucketName: !Sub '${MyBucket}/daily_files'
+            BucketName: 'lambda-poc-for-demo-tsaw-todd'
+            NotificationConfiguration:
+                LambdaConfigurations:
+                    - Event: 's3:ObjectCreated:*'
+                      Function: !GetAtt DatalakeSnowFlakeFunction.Arn
+                      FilterPrefix: 'daily_files/'
+                      FilterSuffix: '.csv'
 
     DatalakeSnowFlakeFunction:
         Type: AWS::Serverless::Function
@@ -74,68 +75,3 @@ Resources:
             Role: arn:aws:iam::891377400717:role/lambda-role-for-cf
             Layers:
                 - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
-            Policies:
-                - AWSLambdaExecute
-                - Version: '2012-10-17'
-                  Statement:
-                    - Effect: Allow
-                      Action:
-                        - sns:Publish
-                        - sns:Subscribe
-                      Resource: !Sub 'arn:aws:sns:us-east-1:${AWS:AccountId}:${Project}-${Subject}-topic'
-                - Version: '2012-10-17'
-                  Statement:
-                    - Effect: Allow
-                      Action:
-                        - 'cloudwatch:*'
-                        - 'logs:*'
-                      Resources: !Sub 'arn:aws:logs:${AWS:Region}:${AWS:AccountId}:log-group:/aws/lambda/${FuctionName}:*'
-                - Version: '2012-10-17'
-                  Statement:
-                   - Effect: Allow
-                     Action:
-                      - ssm:GetParameter
-                      - ssm:DescribeParameters
-                      - ssm:ListParameters
-                     Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
-
-    LambdaTrigger:
-        Type: Custom::S3BucketConfiguration
-    DependsOn:
-        - DatalakeSnowFlakeInvokePermission
-        - MyS3BucketPolicy
-    Properties:
-        Bucket: !Ref MyBucket
-        NotificationConfiguration:
-            LambdaConfigurations:
-                - Event: 's3:ObjectCreated:*'
-                  Function: !Ref DatalakeSnowFlakeFunction
-                  FilterPrefix: daily_files/
-                  FilterSuffix: .csv
-
-    DatalakeSnowFlakeInvokePermission:
-        Type: AWS::Lambda::Permission
-        DependsOn: [DatalakeSnowFlakeFunction]
-        Properties:
-            Action: lambda:InvokeFunction
-            FunctionName: !Ref DatalakeSnowFlakeFunction
-            Principal: s3.amazonaws.com
-            SourceAccount: !Sub ${AWS::AccountId}
-            SourceArn: !Sub 'arn:aws:s3:::${S3SnowflakeBucketbhgft}/daily_files/*.csv'
-
-    MyS3BucketPolicy:
-        Type: AWS::S3::BucketPolicy
-        Properties:
-            Bucket: !Ref S3SnowflakeBucketbhgft
-            PolicyDocument:
-                Statement:
-                 - Sid: LambdaPermission
-                   Effect: Allow
-                   Principal:
-                     Service: lambda.amazonaws.com
-                   Action: 's3:GetObject'
-                   Resource: !Join
-                    - ''
-                    - - 'arn:aws:s3:::'
-                      - !Ref S3SnowflakeBucketbhgft
-                      - /daily_files/*
