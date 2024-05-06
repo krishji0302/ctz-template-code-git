@@ -60,8 +60,13 @@ Resources:
                 LambdaConfigurations:
                     - Event: 's3:ObjectCreated:*'
                       Function: !GetAtt DatalakeSnowFlakeFunction.Arn
-                      FilterPrefix: daily_files/
-                      FilterSuffix: .csv
+                      Filter:
+                       S3Key:
+                        Rules:
+                         - Name: prefix
+                           Value: daily_files/
+                         - Name: suffix
+                           Value: .csv
 
     DatalakeSnowFlakeFunction:
         Type: AWS::Serverless::Function
