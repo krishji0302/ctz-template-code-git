@@ -78,8 +78,8 @@ Resources:
     LambdaTrigger:
         Type: Custom::S3BucketConfiguration
     DependsOn:
-    - BucketPermission
-    - NotificationBucketPolicy
+        - BucketPermission
+        - NotificationBucketPolicy
         Properties:
             Bucket: !Ref MyBucket
             NotificationConfiguration:
