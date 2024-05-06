@@ -81,9 +81,6 @@ Resources:
                     - - 'arn:aws:s3:::'
                       - !Ref S3SnowflakeBucketbhgft
                       - /daily_files/*
-                   Events: 's3:ObjectCreated:*'
-                   FilterPrefix: daily_files/
-                   FilterSuffix: .csv
 
 
     DatalakeSnowFlakeInvokePermission:
