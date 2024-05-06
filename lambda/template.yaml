@@ -80,11 +80,11 @@ Resources:
     DependsOn:
         - BucketPermission
         - NotificationBucketPolicy
-        Properties:
-            Bucket: !Ref MyBucket
-            NotificationConfiguration:
-                LambdaConfigurations:
-                    - Event: 's3:ObjectCreated:*'
-                      Function: !Ref DatalakeSnowFlakeFunction
-                      FilterPrefix: daily_files/
-                      FilterSuffix: .csv
+    Properties:
+        Bucket: !Ref MyBucket
+        NotificationConfiguration:
+            LambdaConfigurations:
+                - Event: 's3:ObjectCreated:*'
+                  Function: !Ref DatalakeSnowFlakeFunction
+                  FilterPrefix: daily_files/
+                  FilterSuffix: .csv
