@@ -97,4 +97,4 @@ Resources:
             FunctionName: !Ref DatalakeSnowFlakeFunction
             Principal: s3.amazonaws.com
             SourceAccount: !Sub ${AWS::AccountId}
-            SourceArn: !Sub 'arn:aws:s3:::${'S3SnowflakeBucketbhgft}/daily_files/*.csv'
+            SourceArn: !Sub 'arn:aws:s3:::${'S3SnowflakeBucketbhgft'}/daily_files/*.csv'
