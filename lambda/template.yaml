@@ -112,3 +112,13 @@ Resources:
                   Function: !Ref DatalakeSnowFlakeFunction
                   FilterPrefix: daily_files/
                   FilterSuffix: .csv
+
+    DatalakeSnowFlakeInvokePermission:
+        Type: AWS::Lambda::Permission
+        DependsOn: [DatalakeSnowFlakeFunction]
+        Properties:
+            Action: lambda:InvokeFunction
+            FunctionName: !Ref DatalakeSnowFlakeFunction
+            Principal: s3.amazonaws.com
+            SourceAccount: !Sub ${AWS::AccountId}
+            SourceArn: !Sub 'arn:aws:s3:::${S3SnowflakeBucketbhgft}/daily_files/*.csv'
