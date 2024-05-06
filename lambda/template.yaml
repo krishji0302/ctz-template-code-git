@@ -52,6 +52,16 @@ Resources:
             Type: String
             Value: 'fsb-dev-servicing-datalake'
 
+    MyBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: lambda-poc-for-demo-tsaw-todd
+    
+    MyFolder:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: !Sub '${MyBucket}/daily_files'
+
     DatalakeSnowFlakeFunction:
         Type: AWS::Serverless::Function
         Properties:
@@ -65,29 +75,13 @@ Resources:
             Layers:
                 - arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python38:19
 
-    MyS3BucketPolicy:
-        Type: AWS::S3::BucketPolicy
+    LambdaTrigger:
+        Type: AWS::S3::BucketNotification
         Properties:
-            Bucket: !Ref S3SnowflakeBucketbhgft
-            PolicyDocument:
-                Statement:
-                 - Sid: LambdaPermission
-                   Effect: Allow
-                   Principal:
-                     Service: lambda.amazonaws.com
-                   Action: 's3:GetObject'
-                   Resource: !Join
-                    - ''
-                    - - 'arn:aws:s3:::'
-                      - !Ref S3SnowflakeBucketbhgft
-                      - /daily_files/*
-
-    DatalakeSnowFlakeInvokePermission:
-        Type: AWS::Lambda::Permission
-        DependsOn: [DatalakeSnowFlakeFunction]
-        Properties:
-            Action: lambda:InvokeFunction
-            FunctionName: !Ref DatalakeSnowFlakeFunction
-            Principal: s3.amazonaws.com
-            SourceAccount: !Sub ${AWS::AccountId}
-            SourceArn: !Sub 'arn:aws:s3:::${S3SnowflakeBucketbhgft}/daily_files/*.csv'
+            Bucket: !Ref MyBucket
+            NotificationConfiguration:
+                LambdaConfigurations:
+                    - Event: 's3:ObjectCreated:*'
+                      Function: !Ref DatalakeSnowFlakeFunction
+                      FilterPrefix: daily_files/
+                      FilterSuffix: .csv
