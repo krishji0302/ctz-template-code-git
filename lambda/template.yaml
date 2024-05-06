@@ -102,8 +102,8 @@ Resources:
     LambdaTrigger:
         Type: Custom::S3BucketConfiguration
     DependsOn:
-        - BucketPermission
-        - NotificationBucketPolicy
+        - DatalakeSnowFlakeInvokePermission
+        - MyS3BucketPolicy
     Properties:
         Bucket: !Ref MyBucket
         NotificationConfiguration:
@@ -122,3 +122,20 @@ Resources:
             Principal: s3.amazonaws.com
             SourceAccount: !Sub ${AWS::AccountId}
             SourceArn: !Sub 'arn:aws:s3:::${S3SnowflakeBucketbhgft}/daily_files/*.csv'
+
+    MyS3BucketPolicy:
+        Type: AWS::S3::BucketPolicy
+        Properties:
+            Bucket: !Ref S3SnowflakeBucketbhgft
+            PolicyDocument:
+                Statement:
+                 - Sid: LambdaPermission
+                   Effect: Allow
+                   Principal:
+                     Service: lambda.amazonaws.com
+                   Action: 's3:GetObject'
+                   Resource: !Join
+                    - ''
+                    - - 'arn:aws:s3:::'
+                      - !Ref S3SnowflakeBucketbhgft
+                      - /daily_files/*
