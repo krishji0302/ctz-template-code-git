@@ -89,6 +89,23 @@ Resources:
                       - ssm:ListParameters
                      Resources: !Sub 'arn:aws:ssm:us-east-1:${AWS:AccountId}:parameter/${PcaExpire}'
 
+    MyS3BucketPolicy:
+        Type: AWS::S3::BucketPolicy
+        Properties:
+            Bucket: !Ref S3SnowflakeBucketbhgft
+            PolicyDocument:
+                Statement:
+                 - Sid: LambdaPermission
+                   Effect: Allow
+                   Principal:
+                     Service: lambda.amazonaws.com
+                   Action: 's3:GetObject'
+                   Resource: !Join
+                    - ''
+                    - - 'arn:aws:s3:::'
+                      - !Ref S3SnowflakeBucketbhgft
+                      - /daily_files/*
+
     DatalakeSnowFlakeInvokePermission:
         Type: AWS::Lambda::Permission
         DependsOn: [DatalakeSnowFlakeFunction]
