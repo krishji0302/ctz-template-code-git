@@ -48,7 +48,7 @@ Resources:
     MySsMParam:
         Type: AWS::SSM::Parameter
         Properties:
-            Name: /fsb_edma_snow_bucketname
+            Name: /fsb_edma_snow_bucketname_krish
             Type: String
             Value: 'fsb-dev-servicing-datalake'
 
